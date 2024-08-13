@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Web Server</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        pre {
+            background-color: #f8f8f8;
+            padding: 10px;
+            border: 1px solid #ddd;
+            overflow-x: auto;
+        }
+    </style>
+    <script>
+        function fetchData() {
+            fetch('/api/data')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('data').innerHTML = JSON.stringify(data, null, 4);
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        setInterval(fetchData, 5000); // Fetch data every 5 seconds
+    </script>
+</head>
+<body onload="fetchData()">
+    <h1>Real-Time Data from Server</h1>
+    <pre id="data">Loading data...</pre>
+</body>
+</html>
