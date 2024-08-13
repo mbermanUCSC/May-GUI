@@ -38,7 +38,7 @@ class SocketClient:
                     try:
                         parsed_data, index = json.JSONDecoder().raw_decode(buffer)
                         received_data = parsed_data
-                        print("Data received:", received_data)  # Debugging
+                        # print("Data received:", received_data)  # Debugging
                         buffer = buffer[index:].lstrip()  # Remove the parsed data from the buffer
                     except json.JSONDecodeError:
                         # Not enough data to decode, break out and wait for more
