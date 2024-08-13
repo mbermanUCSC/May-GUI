@@ -25,20 +25,31 @@ class SocketClient:
 
     def receive_data(self):
         global received_data
+        buffer = ""
         try:
             while True:
                 data = self.client_socket.recv(1024).decode('utf-8')
                 if not data:
                     break
-                parsed_data = json.loads(data)
-                received_data = parsed_data
-                print("Data received:", received_data)  # Debugging
+                
+                buffer += data  # Append new data to the buffer
+                
+                while True:
+                    try:
+                        parsed_data, index = json.JSONDecoder().raw_decode(buffer)
+                        received_data = parsed_data
+                        print("Data received:", received_data)  # Debugging
+                        buffer = buffer[index:].lstrip()  # Remove the parsed data from the buffer
+                    except json.JSONDecodeError:
+                        # Not enough data to decode, break out and wait for more
+                        break
         except ConnectionResetError:
             print("Connection lost.")
         except Exception as e:
             print(f"An error occurred: {e}")
         finally:
             self.client_socket.close()
+
 
 @app.route('/')
 def home():
