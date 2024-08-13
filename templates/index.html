@@ -17,7 +17,7 @@
     </style>
     <script>
         function fetchData() {
-            console.log("Fetching data..."); // Debugging line
+            console.log("Fetching data..."); // Debugging
 
             fetch('/api/data')
                 .then(response => {
@@ -27,8 +27,13 @@
                     return response.json();
                 })
                 .then(data => {
-                    console.log("Data received:", data); // Debugging line
-                    document.getElementById('data').innerHTML = JSON.stringify(data, null, 4);
+                    console.log("Data received:", data); // Debugging
+                    if (document.getElementById('data')) {
+                        document.getElementById('data').innerHTML = JSON.stringify(data, null, 4);
+                        console.log("HTML updated"); // Debugging
+                    } else {
+                        console.error("Element with ID 'data' not found.");
+                    }
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
