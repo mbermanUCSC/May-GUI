@@ -17,22 +17,12 @@
     </style>
     <script>
         function fetchData() {
-            console.log("Fetching data..."); // Debugging line
-
             fetch('/api/data')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
+                .then(response => response.json())
                 .then(data => {
-                    console.log("Data received:", data); // Debugging line
                     document.getElementById('data').innerHTML = JSON.stringify(data, null, 4);
                 })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                });
+                .catch(error => console.error('Error fetching data:', error));
         }
 
         setInterval(fetchData, 5000); // Fetch data every 5 seconds
